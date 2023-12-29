@@ -90,7 +90,7 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
                     child:ElevatedButton(
                       onPressed: () {
                         searchController.findSpecimenByLabQr();
-
+git
                         // Hide the keyboard
                         FocusScope.of(context).unfocus();
                       },
