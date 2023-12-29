@@ -1,29 +1,27 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-
+import 'package:path_provider/path_provider.dart';
 import '../models/specimen_model.dart';
 
 
 
 class SpecimenRepository {
+
   final _dio = Get.find<Dio>();
+
+  // final String pdfUrl = "https://app.alfairouz.ly/api/public/specimen/report-colored/$specimenId";
 
   Future<Specimen> findBySpecimenLabQr(String labQr) async {
     try {
-
-      final response = await _dio.get('https://app.alfairouz.ly/api/public/specimen/by-qr/$labQr'
+      final response = await _dio.get(
+          'https://app.alfairouz.ly/api/public/specimen/by-qr/$labQr'
 
       );
       return Specimen.fromJson(response.data);
-
     } catch (e) {
-
-      rethrow ;
-
+      rethrow;
     }
   }
-
-
 
 
   Future<List<Specimen>> findAllSpecimen() async {
@@ -33,28 +31,18 @@ class SpecimenRepository {
       queryParam['sort'] = 'id,desc';
       final response = await _dio.get('specimen', queryParameters: queryParam);
       final data = response.data as List;
-      print('hhhhheeeeerrrrrreerrre${data}');
+
       return List<Specimen>.from(data.map((e) => Specimen.fromJson(e)));
     } catch (e) {
       rethrow;
     }
   }
-  Future<List<Patient>> findAllSpecimen2() async {
+
+
+  Future<Specimen> findBySpecimenId() async {
     try {
-      Map<String, dynamic> queryParam = {};
-      queryParam['size'] = 100;
-      queryParam['sort'] = 'id,desc';
-      final response = await _dio.get('specimen', queryParameters: queryParam);
-      final data = response.data as List;
-      print('hhhhheeeeerrrrrreerrre${data}');
-      return List<Patient>.from(data.map((e) => Patient.fromJson(e)));
-    } catch (e) {
-      rethrow;
-    }
-  }
-  Future<Specimen> findBySpecimenId(int specimenId) async {
-    try {
-      final response = await _dio.get('https://app.alfairouz.ly/api/public/specimen/$specimenId');
+      final response = await _dio.get(
+          'https://app.alfairouz.ly/api/public/specimen/report-colored/1');
       return Specimen.fromJson(response.data);
     } catch (e) {
       throw e;

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../controllers/HomeController.dart';
 import '../controllers/LoginController.dart';
+import '../controllers/PdfViewController.dart';
 import '../controllers/SpecimenDetailsController.dart';
 import '../controllers/SpecimenSearchController.dart';
 import '../controllers/SpecimensController.dart';
@@ -10,13 +11,14 @@ import '../views/LoginView.dart';
 import '../views/QRScannerView.dart';
 import '../views/SpecimenDetailsView.dart';
 import '../views/SpecimenSearchView.dart';
-import '../views/SpecimensView.dart';
+import '../views/PdfView.dart';
 
 part 'app_routes.dart';
 
 class AppPages {
   //static const INITIAL = Routes.LOGIN;
   static const INITIAL = Routes.SPECIMEN_SEARCH;
+ // static const INITIAL = Routes.Pdf_View;
   static final routes = [
     GetPage(
       name: _Paths.HOME,
@@ -30,7 +32,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SPECIMENS,
-      page: () => SpecimensView(),
+      page: () => PdfView(),
       binding: SpecimensBinding(),
     ),
     GetPage(
@@ -39,13 +41,19 @@ class AppPages {
       binding: SpecimenDetailsBinding(),
     ),
     GetPage(
+      name: _Paths.Pdf_View,
+      page: () => PdfView(),
+      binding: PdfViewControllerBinding(),
+    ),
+    GetPage(
       name: _Paths.SPECIMEN_SEARCH,
       page: () => SpecimenSearchView(),
       binding: SpecimenSearchBinding(),
     ),
     GetPage(
       name: _Paths.QR_SCANNER,
-      page: () => QRScannerView(),
+      page: () => const QRScannerView(),
     ),
+
   ];
 }

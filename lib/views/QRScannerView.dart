@@ -1,3 +1,54 @@
+//
+// import 'package:flutter/material.dart';
+// import 'package:qr_flutter/qr_flutter.dart';
+//
+//
+//
+// class QRScannerView extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     // Example integer to encode
+//     int myInteger = 123;
+//
+//     // Convert integer to string for encoding
+//     String encodedData = myInteger.toString();
+//
+//     return MaterialApp(
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: Text('QR Code Example'),
+//         ),
+//         body: Center(
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               Container(  child: QrImageView(
+//                 data: encodedData,
+//                 version: QrVersions.auto,
+//                 size: 200.0,
+//               ),),
+//               SizedBox(height: 20.0),
+//               ElevatedButton(
+//                 onPressed: () {
+//                   // Simulate decoding the QR code
+//                   int decodedInteger = int.parse(encodedData);
+//                   print('Decoded Integer: $decodedInteger');
+//                 },
+//                 child: Text('Decode QR Code'),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+//
+//
+//
+//
+//
+//
 import 'dart:developer';
 import 'dart:io';
 

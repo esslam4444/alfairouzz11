@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 
 import '../models/specimen_model.dart';
 import '../repositories/specimen_repository.dart';
+import 'PdfViewController.dart';
+import 'SpecimenDetailsController.dart';
 
 class SpecimenSearchController extends GetxController {
   final specimenRepository = Get.find<SpecimenRepository>();
@@ -16,6 +18,8 @@ class SpecimenSearchController extends GetxController {
   final Rx<Patient> _patient = Patient().obs;
 
   Patient get patient => _patient.value;
+
+  PdfViewController? pdfViewController;
   //
   // int _currentStep = 0;
   //
@@ -44,6 +48,8 @@ class SpecimenSearchController extends GetxController {
       loading.value = false;
     }
   }
+
+//  void findSpecimenById() {}
 }
 
 class SpecimenSearchBinding extends Bindings {
