@@ -54,7 +54,7 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
           return Obx(()=>
               GestureDetector(
                 onTap: () {
-                  // Unfocus the text field when tapped outside
+                  // Unfocus the text field when tapped outside svx zz
                   FocusScope.of(context).unfocus();
                 },
                child: ListView(
@@ -90,7 +90,7 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
                     child:ElevatedButton(
                       onPressed: () {
                         searchController.findSpecimenByLabQr();
-git
+
                         // Hide the keyboard
                         FocusScope.of(context).unfocus();
                       },
