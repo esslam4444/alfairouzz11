@@ -9,14 +9,13 @@ import 'SpecimensController.dart';
 class HomeController extends GetxController {
 
   final specimenRepository = Get.find<SpecimenRepository>();
- // final findAllSpecimenss = Get.find<SpecimensController>();
+
   final loading = false.obs;
 
 
   @override
   void onInit() {
     if (Get.find<GetStorage>().hasData('token')) {
-    //  findAllSpecimenss.findAllSpecimens();
     } else {
       Get.offAndToNamed(Routes.LOGIN);
     }

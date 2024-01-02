@@ -3,7 +3,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
 import '../repositories/auth_repository.dart';
 import '../repositories/specimen_repository.dart';
 import 'consts.dart';

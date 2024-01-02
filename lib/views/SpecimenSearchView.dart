@@ -1,22 +1,16 @@
-import 'package:dio/dio.dart';
+import 'package:alfairouzz1/views/QRScannerView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/PdfViewController.dart';
-import '../controllers/SpecimenDetailsController.dart';
 import '../controllers/SpecimenSearchController.dart';
-import '../controllers/SpecimensController.dart';
 import '../routes/app_pages.dart';
 import 'LoginView.dart';
 import 'PdfView.dart';
-import 'log_in_screen.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_file_downloader/flutter_file_downloader.dart';
+
 
 
 class SpecimenSearchView extends GetView<SpecimenSearchController> {
+  final QRScannerView qrScannerView = Get.put(const QRScannerView());
 
- // final SpecimensController specimensController = Get.put(SpecimensController());
- // final PdfViewController pdfViewController = Get.put(PdfViewController());
 
   SpecimenSearchView({Key? key}) : super(key: key);
 
@@ -48,9 +42,7 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
         init: SpecimenSearchController(),
         initState: (_) {},
         builder: (searchController) {
-        //  final specimenIdView =searchController.specimen.id;
                     final currentStep = getCurrentStepIndex(searchController.specimen.specimenStatus ?? "");
-          print('current stepppp  ${currentStep}');
           return Obx(()=>
               GestureDetector(
                 onTap: () {
@@ -82,14 +74,17 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
                           icon: const Icon(Icons.qr_code_outlined),
                         ),
                       ),
-                      controller: searchController.labQr,
+                      controller:
+                      searchController.labQr,
+                      //labQrController,
                     ),
                   ),
+
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child:ElevatedButton(
                       onPressed: () {
-                        searchController.findSpecimenByLabQr();
+                        handleSearch;
 
                         // Hide the keyboard
                         FocusScope.of(context).unfocus();
@@ -131,17 +126,14 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
                                     onPressed: () {
                                       // downloadPdf();
 
-                                      // PdfViewController pdfViewController = Get.find<PdfViewController>();
-                                      //
-                                      // //specimenDetailsController.findBySpecimenId();
+
                                       searchController.specimen.specimenStatus == 'READY'?
                                           Get.to(PdfView())
                                           :Null;
-                                      // specimenDetailsController.specimenSearchController?.specimen.id;
-                                      // print('ididididididididid${specimenDetailsController.specimenSearchController?.specimen.id}');
+
 
                                     },
-                                    child: Text('حمل العينة Pdf'),
+                                    child: const Text('حمل العينة Pdf'),
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.deepOrange,
                                       shape: RoundedRectangleBorder(
@@ -167,7 +159,7 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
                       },
                       steps: statusOrder.map((status) {
                         final index = statusOrder.indexOf(status);
-                        print(' this is Index ${index}');
+
                         return Step(
                           state: isCompleted(status, searchController)  ? StepState.complete :StepState.disabled,
                           isActive:
@@ -176,25 +168,6 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
                             status,
                             style: const TextStyle(fontSize: 16),
                           ),
-                          // Row(
-                          //   children: [
-                          //     Text(
-                          //       status,
-                          //       style: const TextStyle(fontSize: 16),
-                          //     ),
-                          //     const Spacer(),
-                          //     if (status == 'READY' &&
-                          //         currentStep <= index &&
-                          //         searchController.specimen.specimenStatus == 'READY' &&
-                          //         searchController.specimen.notPaid == 0)
-                          //       InkWell(
-                          //         onTap: () {
-                          //           // Handle PDF icon press here
-                          //         },
-                          //         child: const Icon(Icons.picture_as_pdf_rounded),
-                          //       ),
-                          //   ],
-                          // ),
                           content: const SizedBox(),
                         );
                       }).toList(),
@@ -218,6 +191,21 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
   bool isCompleted(String status, SpecimenSearchController searchController) {
     return searchController.specimen.specimenStatus == status;
   }
+//  final qrScannerView = Get.find<QRScannerView>();
+  void handleSearch() {
+    // Obtain the SpecimenSearchController instance
+    final searchController = Get.find<SpecimenSearchController>();
+
+    // If the labQr is not empty, perform the search
+    if (searchController.labQr.text.isNotEmpty) {
+      searchController.findSpecimenByLabQr();
+    }
+  }
+
+
+
+
 }
+
 
 

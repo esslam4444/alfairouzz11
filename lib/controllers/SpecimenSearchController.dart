@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../models/specimen_model.dart';
 import '../repositories/specimen_repository.dart';
 import 'PdfViewController.dart';
-import 'SpecimenDetailsController.dart';
 
 class SpecimenSearchController extends GetxController {
   final specimenRepository = Get.find<SpecimenRepository>();
+
+
   final loading = false.obs;
-  final labQr = TextEditingController();
+  var labQr = TextEditingController();
 
   final Rx<Specimen> _specimen = Specimen().obs;
 
@@ -20,12 +20,7 @@ class SpecimenSearchController extends GetxController {
   Patient get patient => _patient.value;
 
   PdfViewController? pdfViewController;
-  //
-  // int _currentStep = 0;
-  //
-  // int get currentStep => _currentStep;
-  //
-  // set currentStep(int value) => _currentStep = value;
+
 
   @override
   void onInit() {
@@ -49,7 +44,7 @@ class SpecimenSearchController extends GetxController {
     }
   }
 
-//  void findSpecimenById() {}
+
 }
 
 class SpecimenSearchBinding extends Bindings {

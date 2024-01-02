@@ -5,7 +5,8 @@ import '../controllers/HomeController.dart';
 import '../controllers/SpecimensController.dart';
 
 class HomeView extends GetView<HomeController> {
-  //const HomeView({Key key}) : super(key: key);
+  const HomeView({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +35,11 @@ class HomeView extends GetView<HomeController> {
                ListView.builder(
                 itemCount: _.specimens.length,
                 itemBuilder: (context, index) {
-                  //final data = dataList[index];
                   final specimen = index < _.specimens.length ? _.specimens[index] : null;
-                //  final patient = index < _.patient.length ? _.patiٍent[index] : null;
-
                   return Card(
                     child: ListTile(
                       title:    Text(specimen?.patient?.nameAr ?? '',style: TextStyle(fontWeight: FontWeight.bold)),
-
-                     // leading: Text(specimen?.specimenStatus ?? ''),
                       subtitle:Text(specimen?.receivingDate.toString() ?? '') ,
-                    //  Text(specimen?.price.toString() ?? ''),
-
                       trailing: Text('  ${specimen?.price.toString() ?? ''}  دينار'       ),
 
                       onTap: () {
@@ -63,15 +57,3 @@ class HomeView extends GetView<HomeController> {
     );
   }
 }
-
-// class ListItem {
-//   final String? title;
-//   final String? subtitle;
-//   final IconData? icon;
-//
-//   ListItem({
-//     this.title,
-//     this.subtitle,
-//     this.icon,
-//   });
-// }

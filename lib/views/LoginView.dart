@@ -7,13 +7,15 @@ import '../utils/consts.dart';
 class LoginView extends GetView<LoginController> {
   final SpecimensController specimensController = Get.put(SpecimensController());
 
+   LoginView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar:AppBar(
-          title: Text(
+          title: const Text(
             'تسجيل الدخول',
             style: TextStyle(
               fontSize: 25.0,
@@ -71,12 +73,12 @@ class LoginView extends GetView<LoginController> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
-                                    hintText: 'اسم المستخدم',
-                                    prefixIcon: Icon(Icons.person),
+                                    hintText: ' البريد الالكتروني',
+                                    prefixIcon: const Icon(Icons.person),
                                   ),
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return 'يجب عليك إدخال رقم الهاتف'.tr;
+                                      return 'يجب عليك إدخال البريد الالكتروني'.tr;
                                     }
                                     return null;
                                   },
@@ -100,7 +102,7 @@ class LoginView extends GetView<LoginController> {
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
                                     hintText: 'كلمة المرور',
-                                    prefixIcon: Icon(Icons.lock),
+                                    prefixIcon: const Icon(Icons.lock),
                                   ),
                                   validator: (value) {
                                     if (value!.isEmpty) {
@@ -113,14 +115,14 @@ class LoginView extends GetView<LoginController> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 16.0),
+                            const SizedBox(height: 16.0),
                             Container(
                               width: double.infinity,
                               height: 48.0,
                               child: ElevatedButton(
                                 onPressed: () {
                                   _.login();
-                                  print('Login Button Pressed');
+
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.green,
@@ -128,15 +130,15 @@ class LoginView extends GetView<LoginController> {
                                     borderRadius: BorderRadius.circular(8.0),
                                   ),
                                 ),
-                                child: Text('دخول'),
+                                child: const Text('دخول'),
                               ),
                             ),
-                            SizedBox(height: 16.0),
+                            const SizedBox(height: 16.0),
                             GestureDetector(
                               onTap: () {
-                                print('Forgot Password');
+
                               },
-                              child: Text(
+                              child: const Text(
                                 'نسيت كلمة المرور',
                                 style: TextStyle(
                                   fontSize: 16,

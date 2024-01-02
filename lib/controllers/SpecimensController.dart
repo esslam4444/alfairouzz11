@@ -7,7 +7,6 @@ import '../repositories/specimen_repository.dart';
 
 class SpecimensController extends GetxController {
    final Rx<Specimen> _specimen = Get.put(Specimen()).obs;
-  // final Rx<Patient> _patients = Get.put(Patient()).obs;
 
   final specimenRepository = Get.find<SpecimenRepository>();
   final loading = false.obs;
@@ -27,8 +26,6 @@ class SpecimensController extends GetxController {
       loading.value = true;
       final response = await specimenRepository.findAllSpecimen();
       specimens.assignAll(response);
-
-   //   print(response);
       update();
     } finally {
       loading.value = false;

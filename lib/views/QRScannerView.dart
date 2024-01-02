@@ -1,66 +1,14 @@
-//
-// import 'package:flutter/material.dart';
-// import 'package:qr_flutter/qr_flutter.dart';
-//
-//
-//
-// class QRScannerView extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     // Example integer to encode
-//     int myInteger = 123;
-//
-//     // Convert integer to string for encoding
-//     String encodedData = myInteger.toString();
-//
-//     return MaterialApp(
-//       home: Scaffold(
-//         appBar: AppBar(
-//           title: Text('QR Code Example'),
-//         ),
-//         body: Center(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               Container(  child: QrImageView(
-//                 data: encodedData,
-//                 version: QrVersions.auto,
-//                 size: 200.0,
-//               ),),
-//               SizedBox(height: 20.0),
-//               ElevatedButton(
-//                 onPressed: () {
-//                   // Simulate decoding the QR code
-//                   int decodedInteger = int.parse(encodedData);
-//                   print('Decoded Integer: $decodedInteger');
-//                 },
-//                 child: Text('Decode QR Code'),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-//
-//
-//
-//
-//
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import '../controllers/SpecimenSearchController.dart';
 
-import '../routes/app_pages.dart';
 
 class QRScannerView extends StatefulWidget {
-  const QRScannerView({super.key});
+  const QRScannerView({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _QRScannerViewState();
@@ -69,6 +17,7 @@ class QRScannerView extends StatefulWidget {
 class _QRScannerViewState extends State<QRScannerView> {
   Barcode? result;
   QRViewController? controller;
+
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
   @override
@@ -78,6 +27,12 @@ class _QRScannerViewState extends State<QRScannerView> {
       controller!.pauseCamera();
     }
     controller!.resumeCamera();
+  }
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
   }
 
   @override
@@ -93,7 +48,11 @@ class _QRScannerViewState extends State<QRScannerView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  if (result != null) Text('Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}') else const Text('Scan a code'),
+                  if (result != null)
+                    Text(
+                        'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
+                  else
+                    const Text('Scan a code'),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -101,34 +60,37 @@ class _QRScannerViewState extends State<QRScannerView> {
                       Container(
                         margin: const EdgeInsets.all(8),
                         child: ElevatedButton(
-                            onPressed: () async {
-                              await controller?.toggleFlash();
-                              setState(() {});
+                          onPressed: () async {
+                            await controller?.toggleFlash();
+                            setState(() {});
+                          },
+                          child: FutureBuilder(
+                            future: controller?.getFlashStatus(),
+                            builder: (context, snapshot) {
+                              return Text('Flash: ${snapshot.data}');
                             },
-                            child: FutureBuilder(
-                              future: controller?.getFlashStatus(),
-                              builder: (context, snapshot) {
-                                return Text('Flash: ${snapshot.data}');
-                              },
-                            )),
+                          ),
+                        ),
                       ),
                       Container(
                         margin: const EdgeInsets.all(8),
                         child: ElevatedButton(
-                            onPressed: () async {
-                              await controller?.flipCamera();
-                              setState(() {});
+                          onPressed: () async {
+                            await controller?.flipCamera();
+                            setState(() {});
+                          },
+                          child: FutureBuilder(
+                            future: controller?.getCameraInfo(),
+                            builder: (context, snapshot) {
+                              if (snapshot.data != null) {
+                                return Text(
+                                    'Camera facing ${describeEnum(snapshot.data!)}');
+                              } else {
+                                return const Text('loading');
+                              }
                             },
-                            child: FutureBuilder(
-                              future: controller?.getCameraInfo(),
-                              builder: (context, snapshot) {
-                                if (snapshot.data != null) {
-                                  return Text('Camera facing ${describeEnum(snapshot.data!)}');
-                                } else {
-                                  return const Text('loading');
-                                }
-                              },
-                            )),
+                          ),
+                        ),
                       )
                     ],
                   ),
@@ -142,35 +104,45 @@ class _QRScannerViewState extends State<QRScannerView> {
                           onPressed: () async {
                             await controller?.pauseCamera();
                           },
-                          child: const Text('Pause', style: TextStyle(fontSize: 20)),
+                          child: const Text('Pause',
+                              style: TextStyle(fontSize: 20)),
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.all(8),
+                        margin: const EdgeInsets.all(8),
                         child: ElevatedButton(
                           onPressed: () async {
                             await controller?.resumeCamera();
                           },
-                          child: const Text('Resume', style: TextStyle(fontSize: 20)),
+                          child: const Text('Resume',
+                              style: TextStyle(fontSize: 20)),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
   }
 
   Widget _buildQrView(BuildContext context) {
-    var scanArea = (MediaQuery.of(context).size.width < 400 || MediaQuery.of(context).size.height < 400) ? 150.0 : 300.0;
+    var scanArea = (MediaQuery.of(context).size.width < 400 ||
+        MediaQuery.of(context).size.height < 400)
+        ? 150.0
+        : 300.0;
     return QRView(
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,
-      overlay: QrScannerOverlayShape(borderColor: Colors.red, borderRadius: 10, borderLength: 30, borderWidth: 10, cutOutSize: scanArea),
+      overlay: QrScannerOverlayShape(
+          borderColor: Colors.red,
+          borderRadius: 10,
+          borderLength: 30,
+          borderWidth: 10,
+          cutOutSize: scanArea),
       onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
     );
   }
@@ -182,8 +154,13 @@ class _QRScannerViewState extends State<QRScannerView> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
-        Get.offAndToNamed(Routes.SPECIMEN_DETAILS, arguments: result!.code);
       });
+      // Update the labQr value in SpecimenSearchController
+      final specimenSearchController = Get.find<SpecimenSearchController>();
+
+      specimenSearchController.labQr.text = scanData.code!;
+      // Navigate back to SpecimenSearchView
+      Get.back();
     });
   }
 
@@ -194,11 +171,5 @@ class _QRScannerViewState extends State<QRScannerView> {
         const SnackBar(content: Text('no Permission')),
       );
     }
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
   }
 }

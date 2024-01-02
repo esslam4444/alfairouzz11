@@ -9,20 +9,16 @@ class SpecimenDetailsController extends GetxController {
 
   final specimenRepository = Get.find<SpecimenRepository>();
 
- // final int? specimenId = Get.arguments;
-  //final int? specimenIdView = Get.arguments;
-
   final loading = false.obs;
 
   final Rx<Specimen> _specimen = Specimen().obs;
 
   Specimen get specimen => _specimen.value;
 
- // SpecimenSearchController? specimenSearchController;
+
 
   @override
   void onInit() {
-    //findBySpecimenId();
     super.onInit();
   }
 

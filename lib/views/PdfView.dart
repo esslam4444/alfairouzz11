@@ -1,14 +1,9 @@
-import 'package:dio/dio.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 import '../controllers/PdfViewController.dart';
-import '../controllers/SpecimenDetailsController.dart';
-import '../controllers/SpecimenSearchController.dart';
-import '../controllers/SpecimensController.dart';
-import '../repositories/specimen_repository.dart';
-import '../routes/app_pages.dart';
+
 
 class PdfView extends GetView<PdfViewController> {
   final PdfViewController pdfViewController = Get.put(PdfViewController());

@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import '../controllers/HomeController.dart';
 import '../controllers/LoginController.dart';
 import '../controllers/PdfViewController.dart';
@@ -16,9 +15,8 @@ import '../views/PdfView.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  //static const INITIAL = Routes.LOGIN;
+
   static const INITIAL = Routes.SPECIMEN_SEARCH;
- // static const INITIAL = Routes.Pdf_View;
   static final routes = [
     GetPage(
       name: _Paths.HOME,
@@ -52,7 +50,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.QR_SCANNER,
-      page: () => const QRScannerView(),
+      page: () =>  QRScannerView(),
     ),
 
   ];
