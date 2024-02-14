@@ -14,7 +14,9 @@
   String? specimenStatus;
   double? notPaid;
   double? price;
+  String? results;
   ReferringDoctor? referringDoctor;
+  ReferringCenter? referringCenter;
   Patient? patient;
 
 
@@ -38,7 +40,10 @@
     // as a jason object belongs to its seperate model Patient
     notPaid = json['notPaid'] ?? 0.0;
     price = json['price'] ?? 0.0;
+    results = json['results'] ?? '';
     patient =  Patient.fromJson( json['patient']);
+    referringDoctor =  ReferringDoctor.fromJson( json['referringDoctor']);
+    referringCenter =  ReferringCenter.fromJson( json['referringCenter']);
 
   }
 
@@ -56,8 +61,11 @@
     data['labQr'] = this.labQr;
     data['notPaid'] = this.notPaid;
     data['price'] = this.price;
+    data['results'] = this.results;
     data['specimenStatus'] = this.specimenStatus;
     data['patient'] = this.patient;
+    data['referringDoctor'] = this.referringDoctor;
+    data['referringCenter'] = this.referringCenter;
 
     return data;
   }
@@ -75,7 +83,7 @@ class Patient {
 
   Patient.fromJson(Map<String, dynamic> json) {
     id = json['id'] ?? null;
-    nameAr = json['nameAr'] ?? 'non';
+    nameAr = json['nameAr'] ?? '';
 
   }
 
@@ -117,5 +125,28 @@ class Patient {
 
 
 
+ class ReferringCenter {
+   String? name;
+   String? nameAr;
+
+   //constructor فاضي
+   ReferringCenter();
+
+
+   ReferringCenter.fromJson(Map<String, dynamic> json) {
+
+     name = json['name'] ?? '';
+     nameAr = json['nameAr'] ?? '';
+   }
+
+   Map<String, dynamic> toJson() {
+     final Map<String, dynamic> data = new Map<String, dynamic>();
+     data['name'] = this.name;
+     data['nameAr'] = this.nameAr;
+
+     return data;
+   }
+
+ }
 
 

@@ -5,9 +5,9 @@ import '../controllers/SpecimensController.dart';
 import '../utils/consts.dart';
 
 class LoginView extends GetView<LoginController> {
-  final SpecimensController specimensController = Get.put(SpecimensController());
+  //final SpecimensController specimensController = Get.put(SpecimensController());
 
-   LoginView({super.key});
+   const LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {

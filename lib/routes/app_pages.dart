@@ -5,6 +5,7 @@ import '../controllers/PdfViewController.dart';
 import '../controllers/SpecimenDetailsController.dart';
 import '../controllers/SpecimenSearchController.dart';
 import '../controllers/SpecimensController.dart';
+import '../views/HomePdfView.dart';
 import '../views/HomeView.dart';
 import '../views/LoginView.dart';
 import '../views/QRScannerView.dart';
@@ -41,6 +42,11 @@ class AppPages {
     GetPage(
       name: _Paths.Pdf_View,
       page: () => PdfView(),
+      binding: PdfViewControllerBinding(),
+    ),
+    GetPage(
+      name: _Paths.Home_Pdf_View,
+      page: () => HomePdfView(),
       binding: PdfViewControllerBinding(),
     ),
     GetPage(

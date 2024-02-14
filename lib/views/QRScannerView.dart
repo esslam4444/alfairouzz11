@@ -35,99 +35,50 @@ class _QRScannerViewState extends State<QRScannerView> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Expanded(flex: 4, child: _buildQrView(context)),
+
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: SizedBox(
+      child: Column(
+        children: [
           Expanded(
-            flex: 1,
-            child: FittedBox(
-              fit: BoxFit.contain,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  if (result != null)
-                    Text(
-                        'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-                  else
-                    const Text('Scan a code'),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller?.toggleFlash();
-                            setState(() {});
-                          },
-                          child: FutureBuilder(
-                            future: controller?.getFlashStatus(),
-                            builder: (context, snapshot) {
-                              return Text('Flash: ${snapshot.data}');
-                            },
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller?.flipCamera();
-                            setState(() {});
-                          },
-                          child: FutureBuilder(
-                            future: controller?.getCameraInfo(),
-                            builder: (context, snapshot) {
-                              if (snapshot.data != null) {
-                                return Text(
-                                    'Camera facing ${describeEnum(snapshot.data!)}');
-                              } else {
-                                return const Text('loading');
-                              }
-                            },
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller?.pauseCamera();
-                          },
-                          child: const Text('Pause',
-                              style: TextStyle(fontSize: 20)),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller?.resumeCamera();
-                          },
-                          child: const Text('Resume',
-                              style: TextStyle(fontSize: 20)),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            flex: 4,
+            child: _buildQrView(context),
           ),
         ],
       ),
-    );
-  }
+    ),
+    bottomNavigationBar: BottomAppBar(
+      child: Container(
+        height: 56.0,
+        child: ElevatedButton.icon(
+          onPressed: () async {
+            await controller?.toggleFlash();
+            setState(() {});
+          },
+          icon: Icon(
+
+            Icons.flash_on,
+
+            color: Colors.white,
+          ),
+          label: Text(
+            'Flash',
+            style: TextStyle(
+              fontSize: 16.0,
+              color: Colors.white,
+            ),
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: Colors.blue,
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
 
   Widget _buildQrView(BuildContext context) {
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
@@ -173,3 +124,102 @@ class _QRScannerViewState extends State<QRScannerView> {
     }
   }
 }
+
+
+
+
+//=========  الكود الاصلي =======
+
+// @override
+// Widget build(BuildContext context) {
+//   return Scaffold(
+//     body: Column(
+//       children: <Widget>[
+//         Expanded(flex: 4, child: _buildQrView(context)),
+//         // Expanded(
+//         //   flex: 1,
+//         //   child: FittedBox(
+//         //     fit: BoxFit.contain,
+//         //     child: Column(
+//         //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//         //       children: <Widget>[
+//         //         if (result != null)
+//         //           Text(
+//         //               'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
+//         //         else
+//         //           const Text('Scan a code'),
+//         //         Row(
+//         //           mainAxisAlignment: MainAxisAlignment.center,
+//         //           crossAxisAlignment: CrossAxisAlignment.center,
+//         //           children: <Widget>[
+//         //             Container(
+//         //               margin: const EdgeInsets.all(8),
+//         //               child: ElevatedButton(
+//         //                 onPressed: () async {
+//         //                   await controller?.toggleFlash();
+//         //                   setState(() {});
+//         //                 },
+//         //                 child: FutureBuilder(
+//         //                   future: controller?.getFlashStatus(),
+//         //                   builder: (context, snapshot) {
+//         //                     return Text('Flash: ${snapshot.data}');
+//         //                   },
+//         //                 ),
+//         //               ),
+//         //             ),
+//         //             // Container(
+//         //             //   margin: const EdgeInsets.all(8),
+//         //             //   child: ElevatedButton(
+//         //             //     onPressed: () async {
+//         //             //       await controller?.flipCamera();
+//         //             //       setState(() {});
+//         //             //     },
+//         //             //     child: FutureBuilder(
+//         //             //       future: controller?.getCameraInfo(),
+//         //             //       builder: (context, snapshot) {
+//         //             //         if (snapshot.data != null) {
+//         //             //           return Text(
+//         //             //               'Camera facing ${describeEnum(snapshot.data!)}');
+//         //             //         } else {
+//         //             //           return const Text('loading');
+//         //             //         }
+//         //             //       },
+//         //             //     ),
+//         //             //   ),
+//         //             // )
+//         //           ],
+//         //         ),
+//         //         // Row(
+//         //         //   mainAxisAlignment: MainAxisAlignment.center,
+//         //         //   crossAxisAlignment: CrossAxisAlignment.center,
+//         //         //   children: <Widget>[
+//         //         //     Container(
+//         //         //       margin: const EdgeInsets.all(8),
+//         //         //       child: ElevatedButton(
+//         //         //         onPressed: () async {
+//         //         //           await controller?.pauseCamera();
+//         //         //         },
+//         //         //         child: const Text('Pause',
+//         //         //             style: TextStyle(fontSize: 20)),
+//         //         //       ),
+//         //         //     ),
+//         //         //     Container(
+//         //         //       margin: const EdgeInsets.all(8),
+//         //         //       child: ElevatedButton(
+//         //         //         onPressed: () async {
+//         //         //           await controller?.resumeCamera();
+//         //         //         },
+//         //         //         child: const Text('Resume',
+//         //         //             style: TextStyle(fontSize: 20)),
+//         //         //       ),
+//         //         //     ),
+//         //         //   ],
+//         //         // ),
+//         //       ],
+//         //     ),
+//         //   ),
+//         // ),
+//       ],
+//     ),
+//   );
+// }

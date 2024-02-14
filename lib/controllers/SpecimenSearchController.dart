@@ -7,7 +7,6 @@ import 'PdfViewController.dart';
 class SpecimenSearchController extends GetxController {
   final specimenRepository = Get.find<SpecimenRepository>();
 
-
   final loading = false.obs;
   var labQr = TextEditingController();
 
@@ -21,6 +20,10 @@ class SpecimenSearchController extends GetxController {
 
   PdfViewController? pdfViewController;
 
+  // Define the getter for isRequestBad
+  bool get isRequestBad => _isRequestBad.value;
+
+  final _isRequestBad = false.obs;
 
   @override
   void onInit() {
@@ -30,21 +33,25 @@ class SpecimenSearchController extends GetxController {
   @override
   void onClose() {
     labQr.dispose();
+
     super.onClose();
   }
 
   Future<void> findSpecimenByLabQr() async {
     try {
       loading.value = true;
+      // Reset the isRequestBad state to false before making a new request
+      _isRequestBad.value = false;
+
       _specimen.value = await specimenRepository.findBySpecimenLabQr(labQr.text);
+
     } catch (e) {
       // Handle the error
+      _isRequestBad.value = true;
     } finally {
       loading.value = false;
     }
   }
-
-
 }
 
 class SpecimenSearchBinding extends Bindings {

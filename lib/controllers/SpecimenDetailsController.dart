@@ -15,10 +15,12 @@ class SpecimenDetailsController extends GetxController {
 
   Specimen get specimen => _specimen.value;
 
-
+  final  specimenId =0.obs;
 
   @override
   void onInit() {
+    findBySpecimenId();
+
     super.onInit();
   }
 
@@ -33,7 +35,7 @@ class SpecimenDetailsController extends GetxController {
   findBySpecimenId() async {
     try {
       loading.value = true;
-      _specimen.value = await specimenRepository.findBySpecimenId();
+      _specimen.value = await specimenRepository.findBySpecimenId( specimenId );
 
 
       update();

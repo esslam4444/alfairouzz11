@@ -26,15 +26,15 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
 
   @override
   Widget build(BuildContext context) {
+    final context = Get.context;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("مختبر الفيروز"),
         actions: [
           IconButton(
             icon: const Icon(Icons.person),
-            onPressed: () {
-              Get.to( LoginView());
-            },
+            onPressed: () => Get.to( LoginView()),
           ),
         ],
       ),
@@ -42,12 +42,18 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
         init: SpecimenSearchController(),
         initState: (_) {},
         builder: (searchController) {
-                    final currentStep = getCurrentStepIndex(searchController.specimen.specimenStatus ?? "");
+
+          bool isCompleted(String status) {
+            final currentStatusIndex = statusOrder.indexOf(searchController.specimen.specimenStatus??"");
+            final statusIndex = statusOrder.indexOf(status);
+            return statusIndex <= currentStatusIndex;
+          }
+
           return Obx(()=>
               GestureDetector(
                 onTap: () {
                   // Unfocus the text field when tapped outside svx zz
-                  FocusScope.of(context).unfocus();
+                  FocusScope.of(context!).unfocus();
                 },
                child: ListView(
                 children: [
@@ -76,6 +82,7 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
                       ),
                       controller:
                       searchController.labQr,
+
                       //labQrController,
                     ),
                   ),
@@ -83,27 +90,42 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child:ElevatedButton(
-                      onPressed: () {
-                        handleSearch;
-
+                      onPressed: () async {
                         // Hide the keyboard
-                        FocusScope.of(context).unfocus();
+                        FocusScope.of(context!).unfocus();
+
+                        // Perform the search
+                        await searchController.findSpecimenByLabQr();
+
+                        // Check if the request was bad
+                        if (searchController.isRequestBad) {
+                          showDialog(
+                            context: context!,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('خطأ'),
+                                content: Text('رقم التسجيل غير صحيح'),
+                                actions: [
+                                  TextButton(
+                                    child: Text('موافق'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
                       },
                       child: const Text('بحث'),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                SizedBox(height:10),
+
                   searchController.loading.value
-                      ? const CircularProgressIndicator()
-                      : const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      "النتائج",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    ),
-                  ),
+                      ? const Center(child: CircularProgressIndicator())
+                      : const SizedBox(),
                   searchController.specimen.id != null
                       ? Card(
                     elevation: 2,
@@ -117,7 +139,7 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
                         children: [
                           Text(
                             searchController.specimen.patient?.nameAr ?? "",
-                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
                           ),
                                 const Spacer(),
                           searchController.specimen.specimenStatus == 'READY'?
@@ -133,12 +155,17 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
 
 
                                     },
-                                    child: const Text('حمل العينة Pdf'),
+                                    child: const Text('PDF'),
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.deepOrange,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8.0),
-                                      ),
+                                        primary: Colors.white,
+                                        onPrimary: Colors.lightGreen,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(6.0),
+                                          side: BorderSide(
+                                            color: Colors.lightGreen,
+                                            width: 1.0,
+                                          ),
+                                        ),
                                     ),
                                   ),
                                 )
@@ -149,30 +176,32 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
                   )
                       : const SizedBox(child: Text('')),
 
-                  SingleChildScrollView(
-                    child: Stepper(
-                      type: StepperType.vertical,
-                      currentStep: currentStep,
 
-                      controlsBuilder: (context, details) {
-                        return Container();
-                      },
-                      steps: statusOrder.map((status) {
-                        final index = statusOrder.indexOf(status);
+                  SizedBox(height: Get.height/2,
+                    child:
+           Stepper(
+            type: StepperType.vertical,
+            // currentStep: currentStep,
 
-                        return Step(
-                          state: isCompleted(status, searchController)  ? StepState.complete :StepState.disabled,
-                          isActive:
-                           isCompleted(status, searchController) ,
-                          title:  Text(
-                            status,
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          content: const SizedBox(),
-                        );
-                      }).toList(),
-                    ),
-                  ),
+
+             controlsBuilder: (context, details) {
+               return Container();
+             },
+             steps: statusOrder.map((status) {
+               final index = statusOrder.indexOf(status);
+
+               return Step(
+                 state: isCompleted(status, )  ? StepState.complete :StepState.indexed,
+                 isActive:true &&
+                  isCompleted(status, ),
+                 title:  Text(
+                   status,
+                   style: const TextStyle(fontSize: 16),
+                 ),
+                 content: const SizedBox(),
+               );
+             }).toList(),
+           ),),
                 ],
             ),
              ),
@@ -181,30 +210,6 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
       ),
     );
   }
-
-  int getCurrentStepIndex(String status) {
-    final index = statusOrder.indexOf(status);
-   // print('this is the index ${index}');
-    return index != -1 ? index : 0;
-  }
-
-  bool isCompleted(String status, SpecimenSearchController searchController) {
-    return searchController.specimen.specimenStatus == status;
-  }
-//  final qrScannerView = Get.find<QRScannerView>();
-  void handleSearch() {
-    // Obtain the SpecimenSearchController instance
-    final searchController = Get.find<SpecimenSearchController>();
-
-    // If the labQr is not empty, perform the search
-    if (searchController.labQr.text.isNotEmpty) {
-      searchController.findSpecimenByLabQr();
-    }
-  }
-
-
-
-
 }
 
 

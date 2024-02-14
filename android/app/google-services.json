@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "961160655128",
+    "project_id": "alfairouzz1notification-5bf2f",
+    "storage_bucket": "alfairouzz1notification-5bf2f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:961160655128:android:d499fdcdd1ffb52b8dae6d",
+        "android_client_info": {
+          "package_name": "com.example.alfairouzz1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsO_g0G0yY-swumu2TzSBDQIz1Scq71Xw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

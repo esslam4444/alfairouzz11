@@ -25,7 +25,7 @@ import 'SpecimensController.dart';
   final loginEmail = TextEditingController();
   final loginPassword = TextEditingController();
 //---------------------\
-  final findAllSpecimen = Get.find<Specimen>();
+
 
   BoxDecoration get pinPutDecoration {
     return BoxDecoration(
@@ -54,7 +54,8 @@ import 'SpecimensController.dart';
   login() async {
 
     if (loginFormKey.currentState.validate()) {
-
+      // final findAllSpecimen = Get.find<SpecimensController>();
+      // findAllSpecimen.specimenRepository.findAllSpecimen();
       Get.dialog(
         WillPopScope(onWillPop: () async => false, child: const Center(child: CircularProgressIndicator())),
         barrierDismissible: false,

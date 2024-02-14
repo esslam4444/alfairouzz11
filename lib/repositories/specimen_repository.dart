@@ -15,12 +15,14 @@ class SpecimenRepository {
     try {
       final response = await _dio.get(
           'https://app.alfairouz.ly/api/public/specimen/by-qr/$labQr'
-
       );
+
       return Specimen.fromJson(response.data);
+
     } catch (e) {
       rethrow;
     }
+
   }
 
 
@@ -39,10 +41,11 @@ class SpecimenRepository {
   }
 
 
-  Future<Specimen> findBySpecimenId() async {
+  Future<Specimen> findBySpecimenId(RxInt specimenId) async {
     try {
-      final response = await _dio.get(
-          'https://app.alfairouz.ly/api/public/specimen/report-colored/1');
+      final response = await _dio.get('specimen/$specimenId'
+          //'https://app.alfairouz.ly/api/public/specimen/report-colored/1707'
+      );
       return Specimen.fromJson(response.data);
     } catch (e) {
       throw e;

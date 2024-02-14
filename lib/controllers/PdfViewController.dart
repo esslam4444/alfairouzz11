@@ -15,12 +15,17 @@ class PdfViewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
     specimenSearchController = Get.find<SpecimenSearchController>();
+
+
     downloadFile();
+
   }
 
   Future<void> downloadFile() async {
     final dir = await getApplicationDocumentsDirectory();
+
     final specimenId = specimenSearchController?.specimen.id;
 
     if (specimenId != null) {

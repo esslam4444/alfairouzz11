@@ -14,7 +14,7 @@ class PdfView extends GetView<PdfViewController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("AppBar"),
+        title: const Text("نتيجة تحليل العينة"),
       ),
       body: Center(
         child: Obx(() {
