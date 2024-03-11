@@ -11,12 +11,20 @@ class SpecimenRepository {
 
   // final String pdfUrl = "https://app.alfairouz.ly/api/public/specimen/report-colored/$specimenId";
 
-  Future<Specimen> findBySpecimenLabQr(String labQr) async {
+  Future<Specimen> findBySpecimenLabQr(String labQr,
+     // String firebaseToken
+      ) async {
     try {
       final response = await _dio.get(
           'https://app.alfairouz.ly/api/public/specimen/by-qr/$labQr'
       );
-
+      // final response = await _dio.post(
+      //     'https://app.alfairouz.ly/api/public/specimen/by-qr-mobile/',
+      //     queryParameters: {
+      //       "labQr": labQr,
+      //       "firebaseToken": firebaseToken,
+      //     }
+      // );
       return Specimen.fromJson(response.data);
 
     } catch (e) {

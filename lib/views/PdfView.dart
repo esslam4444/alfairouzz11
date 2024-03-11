@@ -2,12 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../controllers/PdfViewController.dart';
+import '../controllers/SpecimenSearchController.dart';
 
 
 class PdfView extends GetView<PdfViewController> {
   final PdfViewController pdfViewController = Get.put(PdfViewController());
-
+  final SpecimenSearchController specimenSearchController = Get.put(SpecimenSearchController());
    PdfView({super.key});
 
   @override
@@ -15,6 +17,19 @@ class PdfView extends GetView<PdfViewController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("نتيجة تحليل العينة"),
+        actions: [    IconButton(
+          icon: const Icon(Icons.picture_as_pdf),
+          onPressed: () async {
+            var specimenId=  specimenSearchController.specimen.id;
+            final url = 'https://app.alfairouz.ly/api/public/specimen/report-colored/$specimenId'; // Replace with your PDF URL
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              throw Exception('Could not launch $url');
+            }
+          },
+        ),
+        ],
       ),
       body: Center(
         child: Obx(() {

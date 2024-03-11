@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../fireBaseApi.dart';
 import '../models/login.dart';
 import '../models/specimen_model.dart';
 import '../repositories/auth_repository.dart';
@@ -12,10 +13,12 @@ import 'SpecimenDetailsController.dart';
 import 'SpecimensController.dart';
 
  class LoginController extends GetxController {
-
+  // FirebaseApi? firebaseApi;
+   var storage = GetStorage();
    // SpecimensController? compositionSpecimen;
- //  var specimenList;
+   //  var specimenList;
    //----
+
   final _authRepo = Get.find<AuthRepository>();
 
   late GlobalKey<FormState> _loginFormKey;
@@ -24,6 +27,7 @@ import 'SpecimensController.dart';
 
   final loginEmail = TextEditingController();
   final loginPassword = TextEditingController();
+    String? firebaseToken;
 //---------------------\
 
 
@@ -40,6 +44,8 @@ import 'SpecimensController.dart';
 
     loginEmail.text = Get.find<GetStorage>().read("username");
     loginPassword.text = Get.find<GetStorage>().read("password");
+    firebaseToken = Get.find<GetStorage>().read('firebaseToken');
+
     super.onInit();
   }
 
@@ -60,13 +66,17 @@ import 'SpecimensController.dart';
         WillPopScope(onWillPop: () async => false, child: const Center(child: CircularProgressIndicator())),
         barrierDismissible: false,
       );
-      LoginVM user = LoginVM(username: loginEmail.text, password: loginPassword.text, rememberMe: true);
+      LoginVM user = LoginVM(username: loginEmail.text, password: loginPassword.text, rememberMe: true,
+           firebaseToken: firebaseToken,
+      );
 
       await _authRepo.authorize(user).then((value) {
         if (value == true) {
           Get.offAllNamed(Routes.HOME);
           Get.find<GetStorage>().write("username", user.username);
           Get.find<GetStorage>().write("password", user.password);
+          Get.find<GetStorage>().write("firebaseToken", user.firebaseToken);
+
         }
       });
     }

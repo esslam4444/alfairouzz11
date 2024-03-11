@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/specimen_model.dart';
@@ -42,8 +43,11 @@ class SpecimenSearchController extends GetxController {
       loading.value = true;
       // Reset the isRequestBad state to false before making a new request
       _isRequestBad.value = false;
-
-      _specimen.value = await specimenRepository.findBySpecimenLabQr(labQr.text);
+      final _firebaseMessaging = FirebaseMessaging.instance;
+     // final FCMToken = await _firebaseMessaging.getToken();
+      _specimen.value = await specimenRepository.findBySpecimenLabQr(labQr.text,
+      //    FCMToken!
+      );
 
     } catch (e) {
       // Handle the error
