@@ -44,9 +44,9 @@ class SpecimenSearchController extends GetxController {
       // Reset the isRequestBad state to false before making a new request
       _isRequestBad.value = false;
       final _firebaseMessaging = FirebaseMessaging.instance;
-     // final FCMToken = await _firebaseMessaging.getToken();
+     final FCMToken = await _firebaseMessaging.getToken();
       _specimen.value = await specimenRepository.findBySpecimenLabQr(labQr.text,
-      //    FCMToken!
+          FCMToken!
       );
 
     } catch (e) {

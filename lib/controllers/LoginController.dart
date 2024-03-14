@@ -13,7 +13,7 @@ import 'SpecimenDetailsController.dart';
 import 'SpecimensController.dart';
 
  class LoginController extends GetxController {
-  // FirebaseApi? firebaseApi;
+   FirebaseApi? firebaseApi;
    var storage = GetStorage();
    // SpecimensController? compositionSpecimen;
    //  var specimenList;

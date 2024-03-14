@@ -155,7 +155,7 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
 
 
                                     },
-                                    child: const Text('PDF'),
+                                    child: const Text('التقرير'),
                                     style: ElevatedButton.styleFrom(
                                         primary: Colors.white,
                                         onPrimary: Colors.lightGreen,

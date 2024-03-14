@@ -12,19 +12,19 @@ class SpecimenRepository {
   // final String pdfUrl = "https://app.alfairouz.ly/api/public/specimen/report-colored/$specimenId";
 
   Future<Specimen> findBySpecimenLabQr(String labQr,
-     // String firebaseToken
+      String firebaseToken
       ) async {
     try {
-      final response = await _dio.get(
-          'https://app.alfairouz.ly/api/public/specimen/by-qr/$labQr'
-      );
-      // final response = await _dio.post(
-      //     'https://app.alfairouz.ly/api/public/specimen/by-qr-mobile/',
-      //     queryParameters: {
-      //       "labQr": labQr,
-      //       "firebaseToken": firebaseToken,
-      //     }
+      // final response = await _dio.get(
+      //     'https://app.alfairouz.ly/api/public/specimen/by-qr/$labQr'
       // );
+      final response = await _dio.post(
+          'https://app.alfairouz.ly/api/public/specimen/by-qr-mobile/',
+          queryParameters: {
+            "labQr": labQr,
+            "firebaseToken": firebaseToken,
+          }
+      );
       return Specimen.fromJson(response.data);
 
     } catch (e) {
@@ -37,6 +37,7 @@ class SpecimenRepository {
   Future<List<Specimen>> findAllSpecimen() async {
     try {
       Map<String, dynamic> queryParam = {};
+      queryParam['page'] = 0;
       queryParam['size'] = 100;
       queryParam['sort'] = 'id,desc';
       final response = await _dio.get('specimen', queryParameters: queryParam);

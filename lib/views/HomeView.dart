@@ -77,6 +77,7 @@ class HomeView extends GetView<HomeController> {
                   return ListView.builder(
                     itemCount: _.specimens.length,
                     itemBuilder: (context, index) {
+                     //final index= _.specimens.length;
                       final specimen =
                       index < _.specimens.length ? _.specimens[index] : null;
                       return GestureDetector(
@@ -90,7 +91,7 @@ class HomeView extends GetView<HomeController> {
                           Get.to(SpecimenDetailsView());
                         },
                         child: Card(
-                          child: ListTile(
+                          child: ListTile(leading: Text((index + 1).toString()),
                             title: Text(
                               specimen?.patient?.nameAr ?? '',
                               style: TextStyle(fontWeight: FontWeight.bold),
@@ -107,7 +108,7 @@ class HomeView extends GetView<HomeController> {
                                 Get.to(HomePdfView());
                               },
                               child: const Text(
-                                'PDF',
+                                'التقرير',
                                 style: TextStyle(color: Colors.lightGreen),
                               ),
                               style: ElevatedButton.styleFrom(

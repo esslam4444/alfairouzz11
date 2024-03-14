@@ -44,7 +44,7 @@ class SpecimenDetailsView extends GetView<SpecimenDetailsController> {
                     ),
                     ListTile(
                       title: Text(
-                        "اسم المختبر",
+                        "الجهة المرسلة",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
