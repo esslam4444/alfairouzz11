@@ -94,19 +94,19 @@ class SpecimenDetailsView extends GetView<SpecimenDetailsController> {
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
-                    ListTile(
-                      title: Text(
-                        "السعر",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      subtitle: Text(
-                        '   ${_.specimen.price.toString() ?? 'غير متاح'}  دينار ',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
+                    // ListTile(
+                    //   title: Text(
+                    //     "السعر",
+                    //     style: TextStyle(
+                    //       fontSize: 18,
+                    //       fontWeight: FontWeight.bold,
+                    //     ),
+                    //   ),
+                    //   subtitle: Text(
+                    //     '   ${_.specimen.price.toString() ?? 'غير متاح'}  دينار ',
+                    //     style: TextStyle(fontSize: 16),
+                    //   ),
+                    // ),
 
                     // Add more details as needed
                   ],
