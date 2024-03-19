@@ -94,20 +94,110 @@ class SpecimenDetailsView extends GetView<SpecimenDetailsController> {
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
-                    // ListTile(
-                    //   title: Text(
-                    //     "السعر",
-                    //     style: TextStyle(
-                    //       fontSize: 18,
-                    //       fontWeight: FontWeight.bold,
-                    //     ),
-                    //   ),
-                    //   subtitle: Text(
-                    //     '   ${_.specimen.price.toString() ?? 'غير متاح'}  دينار ',
-                    //     style: TextStyle(fontSize: 16),
-                    //   ),
-                    // ),
-
+                    ListTile(
+                      title: Text(
+                        "تاريخ الاستلام",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                          _.specimen.receivingDate ?? 'غير متاح',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    ListTile(
+                      title: Text(
+                        "تاريخ أخذ العينات",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        _.specimen.samplingDate ?? 'غير متاح',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    ListTile(
+                      title: Text(
+                        "تاريخ التقرير",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        _.specimen.reportDate ?? 'غير متاح',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    ListTile(
+                      title: Text(
+                        "Type",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        _.specimen.specimenType?.name  ?? 'غير متاح',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    ListTile(
+                      title: Text(
+                        "Size",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        _.specimen.size?.name  ?? 'غير متاح',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    ListTile(
+                      title: Text(
+                        "Organ",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        _.specimen.organ?.name  ?? 'غير متاح',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                            ListTile(
+                      title: Text(
+                        "Biopsy",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        _.specimen.biopsy?.name  ?? 'غير متاح',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    ListTile(
+                      title: Text(
+                        "Cytology",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        _.specimen.cytology?.name  ?? 'غير متاح',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
                     // Add more details as needed
                   ],
                 ),

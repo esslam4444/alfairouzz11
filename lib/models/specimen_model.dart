@@ -8,6 +8,8 @@
   String? createdBy;
   dynamic createdDate;
   dynamic receivingDate;
+  dynamic samplingDate;
+  dynamic reportDate;
   dynamic contractType;
   String? lastModifiedBy;
   String? lastModifiedDate;
@@ -18,6 +20,12 @@
   ReferringDoctor? referringDoctor;
   ReferringCenter? referringCenter;
   Patient? patient;
+  SpecimenType? specimenType;
+  Size? size;
+  Organ? organ;
+  Biopsy? biopsy;
+  Cytology? cytology;
+
 
 
 
@@ -30,6 +38,8 @@
     createdDate = json['createdDate'] ?? '';
     contractType = json['contractType'] ?? '';
     receivingDate = json['receivingDate'] ?? '';
+    samplingDate = json['samplingDate'] ?? '';
+    reportDate = json['reportDate'] ?? '';
     lastModifiedBy = json['lastModifiedBy'] ?? '';
     lastModifiedDate = json['lastModifiedDate'] ?? '';
     id = json['id'] ?? null;
@@ -53,6 +63,8 @@
     data['createdDate'] = this.createdDate;
     data['contractType'] = this.contractType;
     data['receivingDate'] = this.receivingDate;
+    data['samplingDate'] = this.samplingDate;
+    data['reportDate'] = this.reportDate;
     data['lastModifiedBy'] = this.lastModifiedBy;
     data['lastModifiedDate'] = this.lastModifiedDate;
     data['id'] = this.id;
@@ -149,4 +161,113 @@ class Patient {
 
  }
 
+ class SpecimenType {
+   String? name;
 
+   //constructor فاضي
+   SpecimenType();
+
+
+   SpecimenType.fromJson(Map<String, dynamic> json) {
+
+     name = json['name'] ?? '';
+
+   }
+
+   Map<String, dynamic> toJson() {
+     final Map<String, dynamic> data = new Map<String, dynamic>();
+     data['name'] = this.name;
+
+     return data;
+   }
+
+ }
+
+
+ class Size {
+   String? name;
+
+   //constructor فاضي
+   Size();
+
+
+   Size.fromJson(Map<String, dynamic> json) {
+
+     name = json['name'] ?? '';
+
+   }
+
+   Map<String, dynamic> toJson() {
+     final Map<String, dynamic> data = new Map<String, dynamic>();
+     data['name'] = this.name;
+
+     return data;
+   }
+
+ }
+
+ class Organ {
+   String? name;
+
+   //constructor فاضي
+   Organ();
+
+
+   Organ.fromJson(Map<String, dynamic> json) {
+
+     name = json['name'] ?? '';
+
+   }
+
+   Map<String, dynamic> toJson() {
+     final Map<String, dynamic> data = new Map<String, dynamic>();
+     data['name'] = this.name;
+
+     return data;
+   }
+
+ }
+
+ class Biopsy {
+   String? name;
+
+   //constructor فاضي
+   Biopsy();
+
+
+   Biopsy.fromJson(Map<String, dynamic> json) {
+
+     name = json['name'] ?? '';
+
+   }
+
+   Map<String, dynamic> toJson() {
+     final Map<String, dynamic> data = new Map<String, dynamic>();
+     data['name'] = this.name;
+
+     return data;
+   }
+
+ }
+
+ class Cytology {
+   String? name;
+
+   //constructor فاضي
+   Cytology();
+
+
+   Cytology.fromJson(Map<String, dynamic> json) {
+
+     name = json['name'] ?? '';
+
+   }
+
+   Map<String, dynamic> toJson() {
+     final Map<String, dynamic> data = new Map<String, dynamic>();
+     data['name'] = this.name;
+
+     return data;
+   }
+
+ }

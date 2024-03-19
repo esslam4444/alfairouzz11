@@ -176,8 +176,8 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
                   )
                       : const SizedBox(child: Text('')),
 
-
-                  SizedBox(height: Get.height/2,
+                  searchController.specimen.id != null
+                 ? SizedBox(height: Get.height/2,
                     child:
            Stepper(
             type: StepperType.vertical,
@@ -201,7 +201,8 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
                  content: const SizedBox(),
                );
              }).toList(),
-           ),),
+           ),)
+                  :  const SizedBox(),
                 ],
             ),
              ),

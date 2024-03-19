@@ -33,13 +33,14 @@ class SpecimenRepository {
 
   }
 
-
-  Future<List<Specimen>> findAllSpecimen() async {
+  Future<List<Specimen>> findAllSpecimen(RxInt page) async {
     try {
-      Map<String, dynamic> queryParam = {};
-      queryParam['page'] = 0;
-      queryParam['size'] = 100;
-      queryParam['sort'] = 'id,desc';
+      Map<String, dynamic> queryParam = {
+        'page': page,
+        'size': 20,
+        'sort': 'id,desc',
+      };
+
       final response = await _dio.get('specimen', queryParameters: queryParam);
       final data = response.data as List;
 

@@ -12,15 +12,25 @@ import 'QRScannerView.dart';
 import 'SpecimenDetailsView.dart';
 
 class HomeView extends GetView<HomeController> {
+
   final HomePdfViewController homePdfViewController =
   Get.put(HomePdfViewController());
   final SpecimenDetailsController specimenDetailsController =
   Get.put(SpecimenDetailsController());
 
+  final SpecimensController specimensController =
+  Get.put(SpecimensController());
+
+final ScrollController scrollController = ScrollController();
+
   HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    //listen to scroll event
+    scrollController.addListener(() {
+      if(scrollController.position.pixels==scrollController.position.maxScrollExtent){specimensController.findAllSpecimens();}},);
+
     return GetBuilder<SpecimensController>(
       init: SpecimensController(),
       initState: (_) {},
@@ -75,65 +85,69 @@ class HomeView extends GetView<HomeController> {
                   );
                 } else {
                   return ListView.builder(
-                    itemCount: _.specimens.length,
+                    controller: scrollController,
+                    itemCount: _.specimens.length + (_.hasReachedEnd.value ? 0 : 1),
                     itemBuilder: (context, index) {
-                     //final index= _.specimens.length;
-                      final specimen =
-                      index < _.specimens.length ? _.specimens[index] : null;
-                      return GestureDetector(
-                        onTap: () {
-                          final controller =
-                          Get.find<SpecimenDetailsController>();
-                          controller.specimenId.value = specimen?.id ?? 0;
-                          controller.findBySpecimenId();
-
-                          // Handle the onTap event and navigate to SpecimenDetailsView
-                          Get.to(SpecimenDetailsView());
-                        },
-                        child: Card(
-                          child: ListTile(leading: Text((index + 1).toString()),
-                            title: Text(
-                              specimen?.patient?.nameAr ?? '',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Text(specimen?.specimenStatus.toString() ?? ''),
-                            trailing: specimen?.specimenStatus == 'READY'
-                                ? ElevatedButton(
-                              onPressed: () {
-                                final controller =
-                                Get.find<HomePdfViewController>();
-                                controller.specimenId.value =
-                                    specimen?.id ?? 0;
-                                controller.downloadFile();
-                                Get.to(HomePdfView());
-                              },
-                              child: const Text(
-                                'التقرير',
-                                style: TextStyle(color: Colors.lightGreen),
+                      if (index >= _.specimens.length) {
+                        // Show the circular progress indicator at the bottom
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      } else {
+                        final specimen = _.specimens[index];
+                        return GestureDetector(
+                          onTap: () {
+                            final controller = Get.find<SpecimenDetailsController>();
+                            controller.specimenId.value = specimen?.id ?? 0;
+                            controller.findBySpecimenId();
+                            Get.to(SpecimenDetailsView());
+                          },
+                          child: Card(
+                            child: ListTile(
+                              leading: Text((index + 1).toString()),
+                              title: Text(
+                                specimen?.patient?.nameAr ?? '',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.white,
-                                onPrimary: Colors.lightGreen,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6.0),
-                                  side: BorderSide(
-                                    color: Colors.lightGreen,
-                                    width: 1.0,
+                              subtitle: Text(specimen?.specimenStatus.toString() ?? ''),
+                              trailing: specimen?.specimenStatus == 'READY'
+                                  ? ElevatedButton(
+                                onPressed: () {
+                                  final controller = Get.find<HomePdfViewController>();
+                                  controller.specimenId.value = specimen?.id ?? 0;
+                                  controller.downloadFile();
+                                  Get.to(HomePdfView());
+                                },
+                                child: const Text(
+                                  'التقرير',
+                                  style: TextStyle(color: Colors.lightGreen),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.lightGreen,
+                                  backgroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6.0),
+                                    side: BorderSide(
+                                      color: Colors.lightGreen,
+                                      width: 1.0,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            )
-                                : const SizedBox(
-                              child: Text(''),
+                              )
+                                  : const SizedBox.shrink(),
                             ),
                           ),
-                        ),
-                      );
+                        );
+                      }
                     },
                   );
                 }
               },
-            ),
+            )
+
           ),
         );
       },
