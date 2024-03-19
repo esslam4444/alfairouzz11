@@ -175,7 +175,7 @@ class SpecimenSearchView extends GetView<SpecimenSearchController> {
                     ),
                   )
                       : const SizedBox(child: Text('')),
-
+//dd
                   searchController.specimen.id != null
                  ? SizedBox(height: Get.height/2,
                     child:
